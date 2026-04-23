@@ -1,0 +1,63 @@
+Things a dnd 3.5 character sheet needs:
+
+Name: string
+Alignment: enum type?
+Race: object
+Levels: each level has a Character Class it gets things from, which will need to be objects, this is a list of level objects.
+Ability scores and thus modifiers. (these seem like they could just be numbers but they're actually the addition of several numbers so maybe object.)
+skill points (The skill points you have increase when you add a level based on how many skill points the class gives you.)
+skills (array or set of skills, each skill value is an addition of multiple numbers, so maybe an object. some skills have sub types, treated as seperate skills)
+templates (this is a big one adds things to level adjustment and skills and ability scores.)
+Level adjustment
+inventory and equipment which could me lists/ arrays of item objects. Some items can be weapons which can be enchanted and have attacks and damage and effects... yay. Also damage needs be an object since it has types. the damage types could be enums
+
+@startuml
+!theme sketchy-outline
+Class CharSheet{
++String:name
+-race: RaceObj
+-levels: List<LevelObj>
+-abilities: AbilityObj[6]
+-skillPoints: int
+-skills: Set<SkillObj>
+-templates: Set<TemplateObj>
+-lA: int
+-inventory: list<ItemObj>
+-equipment: ItemObj[]
+-alignment: AlignmentEnum
+-feats: Set<FeatObj>
++levelUp(LevelObj): void
++levelUp(CharClass): void
++getBaB(): int
++getMaB(): int
++getRaB(): int
++getAC(): int
++getFFAC(): int
++getTAC(): int
+}
+
+CharSheet o-> RaceObj
+CharSheet o-> LevelObj
+CharSheet o-> AbilityObj
+CharSheet o-> SkillObj
+CharSheet o-> TemplateObj
+CharSheet o-> ItemObj
+CharSheet o-> FeatObj
+CharSheet o..>WeaponObj
+WeaponObj --|> ItemObj
+CharSheet o..>ArmorObj
+ArmorObj --|> ItemObj
+CharSheet o..>SheildObj
+SheildObj --|> ItemObj
+CharClass o--> LevelObj
+FeatObj o..> FeatObj
+
+Class CharClass{
++ name: String
+- levels: LevelObj[]
+}
+Class prestigeClass{
+-prerequisites: something
+}
+prestigeClass --|> CharClass
+@enduml
