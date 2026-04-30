@@ -50,14 +50,32 @@ ArmorObj --|> ItemObj
 CharSheet o..>SheildObj
 SheildObj --|> ItemObj
 CharClass o--> LevelObj
-FeatObj o..> FeatObj
+FeatObj <..> PrereqObj
+PrestigeClass o--> PrereqObj 
+PrereqObj o..> SkillObj
+PrereqObj o..> CharSheet
+PrereqObj o..> AbilityObj
+PrereqObj <--o TemplateObj
+PrereqObj o..> RaceObj
 
 Class CharClass{
 + name: String
 - levels: LevelObj[]
 }
-Class prestigeClass{
--prerequisites: something
+Class PrestigeClass{
+-prereqs: PrerecObj
 }
-prestigeClass --|> CharClass
+PrestigeClass --|> CharClass
+
+Class ItemObj{
++ NAME: String
++ DESC: String
++ COST: int
++ WEIGHT: int
++ createEnlargedItem(): ItemObj
++ createReducedItem(): ItemObj
++ createOriginalSizedItem(): ItemObj
++ duplicate(): ItemObj
++ toString(): String
+}
 @enduml
